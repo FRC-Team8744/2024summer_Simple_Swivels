@@ -20,18 +20,18 @@ public final class Constants {
 
 
 
-  public static final class MechanismConstants {
-    public static final int kFrontIntakePort = 15;
-    public static final int kRearIntakePort = 16;
-    public static final int kTopShooterPort = 17; // Runs forward
-    public static final int kIndexShooterPort = 18;
-    public static final int kBottomShooterPort = 19; // Runs backward
-    public static final int kRightPivotShooterPort = 20;
-    public static final int kLeftPivotShooterPort = 21; // Has absolute encoder
-    public static final int kUndertakerIntakePort = 22;
-    public static final int kLeftClimberPort = 23;
-    public static final int kRightClimberPort = 24;
-  }
+  // public static final class MechanismConstants {
+  //   public static final int kFrontIntakePort = 15;
+  //   public static final int kRearIntakePort = 16;
+  //   public static final int kTopShooterPort = 17; // Runs forward
+  //   public static final int kIndexShooterPort = 18;
+  //   public static final int kBottomShooterPort = 19; // Runs backward
+  //   public static final int kRightPivotShooterPort = 20;
+  //   public static final int kLeftPivotShooterPort = 21; // Has absolute encoder
+  //   public static final int kUndertakerIntakePort = 22;
+  //   public static final int kLeftClimberPort = 23;
+  //   public static final int kRightClimberPort = 24;
+  // }
 
   public static final class SwerveConstants {
     public static final double kMaxSpeedMetersPerSecond = (4.4 * kMaxSpeedPercentAuto) / 100;
@@ -41,30 +41,25 @@ public final class Constants {
     // The positive X axis points ahead, the positive Y axis points left, and the positive Z axis points up.
     // We use NWU here because the rest of the library, and math in general, use NWU axes convention.
     // https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html#axis-conventions
+  
     public static final int kFrontLeftDriveMotorPort = 5;
     public static final int kFrontRightDriveMotorPort = 1;
-    public static final int kRearLeftDriveMotorPort = 8;
     public static final int kRearRightDriveMotorPort = 4;
-
+    public static final int kRearLeftDriveMotorPort = 8;
+    
+    
     public static final int kFrontLeftTurningMotorPort = 6;
     public static final int kFrontRightTurningMotorPort = 2;
+     public static final int kRearRightTurningMotorPort = 3;
     public static final int kRearLeftTurningMotorPort = 7;
-    public static final int kRearRightTurningMotorPort = 3;
-
-    // public static final boolean kFrontLeftTurningEncoderReversed = true;
-    // public static final boolean kFrontRightTurningEncoderReversed = false;
-    // public static final boolean kRearLeftTurningEncoderReversed = true;
-    // public static final boolean kRearRightTurningEncoderReversed = true;
-
-    // public static final boolean kFrontLeftDriveEncoderReversed = false;
-    // public static final boolean kFrontRightDriveEncoderReversed = false;
-    // public static final boolean kRearLeftDriveEncoderReversed = true;
-    // public static final boolean kRearRightDriveEncoderReversed = true;
-
-    public static final int kFrontLeftMagEncoderPort = 12;
+   
+    
+    
+    public static final int kFrontLeftMagEncoderPort = 10;
     public static final int kFrontRightMagEncoderPort = 9;
+     public static final int kRearRightMagEncoderPort = 12;
     public static final int kRearLeftMagEncoderPort = 11;
-    public static final int kRearRightMagEncoderPort = 10;
+   
 
     // Only disable the steering angle optimizer when measuring the CANcoder offsets!
     public static final boolean DISABLE_ANGLE_OPTIMIZER = false;
@@ -94,8 +89,7 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2),  // Rear Left Quadrant
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));  // Rear Right Quadrant
 
-    public static final int kIMU_ID = 13;
-    // public static final boolean kGyroReversed = false;
+
 
     public static int kSwerveFL_enum = 0;
     public static int kSwerveFR_enum = 1;
@@ -114,10 +108,6 @@ public final class Constants {
     public static final double ANGLE_GEAR_RATIO = (150 / 7) / 1.0; // 150/7:1
     public static final double ANGLE_ROTATIONS_TO_RADIANS = (Math.PI * 2) / ANGLE_GEAR_RATIO;
     public static final double ANGLE_RPM_TO_RADIANS_PER_SECOND = DRIVE_ROTATIONS_TO_METERS / 60.0;
-
-    /** Speed ramp. */
-    // public static final double OPEN_LOOP_RAMP = 0.25;
-    // public static final double CLOSED_LOOP_RAMP = 0.0;
 
     /** Current limiting. */
     public static final int DRIVE_CURRENT_LIMIT = 40;
@@ -168,10 +158,6 @@ public final class Constants {
     public static final boolean ANGLE_MOTOR_INVERSION = true;
     // public static final boolean CANCODER_INVERSION = false;
 
-    /** Idle modes. */
-    // public static final IdleMode DRIVE_IDLE_MODE = IdleMode.kBrake;
-    // public static final IdleMode ANGLE_IDLE_MODE = IdleMode.kBrake;
-
   }
 
   public static final class OIConstants {
@@ -194,5 +180,36 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  }
+
+  public static final class IMUConstants {
+    public static final int DEBUG_NONE = 0;  // Debug levels: 0 = none, 1 = data to dashboard
+  public static final int DEBUG_ALL = 1;  // Debug levels: 0 = none, 1 = data to dashboard
+  public static final int DEBUG_IMU = DEBUG_ALL;  // Debug levels: 0 = none, 1 = data to dashboard
+
+  // IMU types
+  public static final int PIGEON1 = 0;  // https://store.ctr-electronics.com/gadgeteer-pigeon-imu/
+  public static final int NAVX2_MICRO = 1;  // https://www.kauailabs.com/navx-micro/
+  public static final int PIGEON2 = 2;  // https://store.ctr-electronics.com/pigeon-2/
+
+  // IMU selected for data output
+  public static final int IMU_SELECTED = PIGEON2;
+
+  // PIGEON1
+  // NOTES: Pigeon1 requires 5 seconds of zero robot motion after power up!
+  public static final boolean PIGEON1_ENABLE = true;
+
+ public static final int PIGEON1_kIMU_CAN_ID = 13;
+
+  // NavX2 Micro
+  // NOTES: NavX2 requires 5 seconds of zero robot motion after power up!
+  // Specifications are equivalent to the Pigeon2
+  // USB connection has a delay - try to connect with I2C
+  public static final boolean NAVX2_MICRO_ENABLE = false;
+
+  // PIGEON2 (Using Phoenix6 library)
+  public static final boolean PIGEON2_ENABLE = false;
+
+  public static final int PIGEON2_kIMU_CAN_ID = 13;
   }
 }

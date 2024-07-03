@@ -34,7 +34,7 @@ public class SwerveModuleOffboard {
   // Swerve module absolute encoder (wheel angle)
   private final CANcoder m_canCoder;
   private final double m_canCoderOffsetDegrees;
-  private double lastAngle;
+  //private double lastAngle;
 
   SwerveModuleState state;
   private int DisplayCount = 0;
@@ -64,7 +64,7 @@ public class SwerveModuleOffboard {
     m_canCoderOffsetDegrees = magEncoderOffsetDegrees;
 
     configureDevices();
-    lastAngle = getState().angle.getRadians();
+    //lastAngle = getState().angle.getRadians();
   }
 
   /**

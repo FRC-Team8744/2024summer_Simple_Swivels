@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IMUConstants;
 
 // import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -18,36 +19,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 
 public class Multi_IMU extends SubsystemBase {
-// TODO: CONSTANTS - move to Constants.java after debug
-  public static final int DEBUG_NONE = 0;  // Debug levels: 0 = none, 1 = data to dashboard
-  public static final int DEBUG_ALL = 1;  // Debug levels: 0 = none, 1 = data to dashboard
-  public static final int DEBUG_IMU = DEBUG_ALL;  // Debug levels: 0 = none, 1 = data to dashboard
-
-  // IMU types
-  public static final int PIGEON1 = 0;  // https://store.ctr-electronics.com/gadgeteer-pigeon-imu/
-  public static final int NAVX2_MICRO = 1;  // https://www.kauailabs.com/navx-micro/
-  public static final int PIGEON2 = 2;  // https://store.ctr-electronics.com/pigeon-2/
-
-  // IMU selected for data output
-  public static final int IMU_SELECTED = PIGEON1;
-
-  // PIGEON1
-  // NOTES: Pigeon1 requires 5 seconds of zero robot motion after power up!
-  public static final boolean PIGEON1_ENABLE = true;
-
-  public static final int PIGEON1_kIMU_CAN_ID = 13;
-
-  // NavX2 Micro
-  // NOTES: NavX2 requires 5 seconds of zero robot motion after power up!
-  // Specifications are equivalent to the Pigeon2
-  // USB connection has a delay - try to connect with I2C
-  public static final boolean NAVX2_MICRO_ENABLE = false;
-
-  // PIGEON2 (Using Phoenix6 library)
-  public static final boolean PIGEON2_ENABLE = false;
-
-  public static final int PIGEON2_kIMU_CAN_ID = 14;
-// End CONSTANTS
 
   // The imu sensors
   private PigeonIMU m_imu_pigeon1;
@@ -65,23 +36,23 @@ public class Multi_IMU extends SubsystemBase {
     m_whoami = Preferences.getString("RobotName", "Undefined");
     switch (m_whoami) {
       case "Swivels":
-          m_imuSelected = PIGEON1;
+          m_imuSelected = IMUConstants.PIGEON2;
           m_pigeon1_Enable = true;
         break;
     
       case "NoNo":
-          m_imuSelected = PIGEON2;
+          m_imuSelected = IMUConstants.PIGEON2;
           m_pigeon2_Enable = true;
         break;
     
       default:
-          m_imuSelected = PIGEON1;
+          m_imuSelected = IMUConstants.PIGEON2;
           m_pigeon1_Enable = true;
         break;
     }
 
     // Attempt to communicate with new sensor (may not exist)
-    if (m_pigeon1_Enable) m_imu_pigeon1 = new PigeonIMU(PIGEON1_kIMU_CAN_ID);
+    if (m_pigeon1_Enable) m_imu_pigeon1 = new PigeonIMU(IMUConstants.PIGEON1_kIMU_CAN_ID);
 
     if (m_navx2_Enable) {
       try {
@@ -92,7 +63,7 @@ public class Multi_IMU extends SubsystemBase {
     }
 
     if (m_pigeon2_Enable) {
-      m_imu_pigeon2 = new Pigeon2(PIGEON2_kIMU_CAN_ID, "rio");
+      m_imu_pigeon2 = new Pigeon2(IMUConstants.PIGEON2_kIMU_CAN_ID, "rio");
 
       // Configure Pigeon2
       var toApply = new Pigeon2Configuration();  // User can change the configs if they want, or leave it empty for factory-default
@@ -112,17 +83,17 @@ public class Multi_IMU extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (m_pigeon1_Enable && (DEBUG_IMU >= DEBUG_ALL)) {
+    if (m_pigeon1_Enable && (IMUConstants.DEBUG_IMU >= IMUConstants.DEBUG_ALL)) {
       SmartDashboard.putNumber("Pigeon1 GyroZ", m_imu_pigeon1.getYaw());
       SmartDashboard.putNumber("Pigeon1 Absolute GyroZ", m_imu_pigeon1.getAbsoluteCompassHeading());
       SmartDashboard.putNumber("Pigeon1 Fused GyroZ", m_imu_pigeon1.getFusedHeading());
     }
 
-    if (m_navx2_Enable && (DEBUG_IMU >= DEBUG_ALL)) {
+    if (m_navx2_Enable && (IMUConstants.DEBUG_IMU >= IMUConstants.DEBUG_ALL)) {
       SmartDashboard.putNumber("NavX GyroZ", m_imu_navX2_micro.getYaw());
     }
 
-    if (m_pigeon2_Enable && (DEBUG_IMU >= DEBUG_ALL)) {
+    if (m_pigeon2_Enable && (IMUConstants.DEBUG_IMU >= IMUConstants.DEBUG_ALL)) {
       SmartDashboard.putNumber("Pigeon2 GyroZ", m_imu_pigeon2.getYaw().getValueAsDouble());
     }
   }
@@ -135,7 +106,7 @@ public class Multi_IMU extends SubsystemBase {
       m_imu_pigeon1.setYaw(0);
     }
 
-    if (NAVX2_MICRO_ENABLE) {
+    if (IMUConstants.NAVX2_MICRO_ENABLE) {
       m_imu_navX2_micro.zeroYaw();
       m_imu_navX2_micro.reset();
     }
@@ -152,15 +123,15 @@ public class Multi_IMU extends SubsystemBase {
    */
   public Rotation2d getHeading() {
     switch (m_imuSelected){
-      case PIGEON1:
+      case IMUConstants.PIGEON1:
         if (m_pigeon1_Enable) {
           return Rotation2d.fromDegrees(m_imu_pigeon1.getYaw());
         } else return Rotation2d.fromDegrees(0.0);
-      case NAVX2_MICRO:
+      case IMUConstants.NAVX2_MICRO:
         if (m_navx2_Enable) {
           return Rotation2d.fromDegrees(m_imu_navX2_micro.getYaw());
         } else return Rotation2d.fromDegrees(0.0);
-      case PIGEON2:
+      case IMUConstants.PIGEON2:
         if (m_pigeon2_Enable) {
           return Rotation2d.fromDegrees(m_imu_pigeon2.getYaw().getValueAsDouble());
         } else return Rotation2d.fromDegrees(0.0);
@@ -176,15 +147,15 @@ public class Multi_IMU extends SubsystemBase {
    */
   public double getHeadingDegrees() {
     switch (m_imuSelected){
-      case PIGEON1:
+      case IMUConstants.PIGEON1:
         if (m_pigeon1_Enable) {
           return m_imu_pigeon1.getYaw();
         } else return 9999999.9;
-      case NAVX2_MICRO:
+      case IMUConstants.NAVX2_MICRO:
         if (m_navx2_Enable) {
           return m_imu_navX2_micro.getYaw();
         } else return 9999999.9;
-      case PIGEON2:
+      case IMUConstants.PIGEON2:
         if (m_pigeon2_Enable) {
           return m_imu_pigeon2.getYaw().getValueAsDouble();
         } else return 9999999.9;

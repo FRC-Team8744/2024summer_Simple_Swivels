@@ -179,15 +179,9 @@ public class DriveSubsystem extends SubsystemBase {
     // Update robot position on Field2d.
     m_field.setRobotPose(getPose());
 
-    if (controllerMode == "j") {
-      if (m_Joystick.getRawAxis(3) < 0) {
-        m_DriverSpeedScale = 1.0;
-      }
-      else {
-        m_DriverSpeedScale = Constants.kDriverSpeedLimit;
-      }
-    }
-
+    
+    m_DriverSpeedScale = Constants.kDriverSpeedLimit;
+      
     pose_publisher.set(getPose());
     swerve_publisher.set(new SwerveModuleState[] {
             m_frontLeft.getState(),
