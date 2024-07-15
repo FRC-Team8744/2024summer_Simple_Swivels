@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7389090301854088,
-        "y": 6.626122327080732
+        "x": 0.69689153462814,
+        "y": 4.335895995735654
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.218931749951848,
-        "y": 7.022395276286342
+        "x": 0.69689153462814,
+        "y": 4.335895995735654
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.250886555981384,
-        "y": 6.984342915904092
+        "x": 1.3617289206409402,
+        "y": 5.56439986119409
       },
       "prevControl": {
-        "x": 1.6405218655999818,
-        "y": 7.0458169493779055
+        "x": 2.6191387594042794,
+        "y": 4.6538617020896025
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SaL1"
     }
   ],
   "rotationTargets": [],
@@ -38,14 +38,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.8335500227524165,
+    "velocity": 0,
+    "rotation": 2.045408488887154,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "gaming folder",
+  "folder": "Shoot and Leave",
   "previewStartingState": {
-    "rotation": 60.033258129388244,
+    "rotation": -60.51999999999998,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -2,30 +2,36 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7389090301854088,
-      "y": 6.626122327080732
+      "x": 0.7,
+      "y": 4.34
     },
-    "rotation": 59.3813945910906
+    "rotation": -60.51999999999998
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "SaL1"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ShootRingWoofer"
+            "name": "Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "top speaker 1 ring"
+            "pathName": "SaL2"
           }
         }
       ]
     }
   },
-  "folder": "gaming folder ",
+  "folder": "Comp Autos",
   "choreoAuto": false
 }

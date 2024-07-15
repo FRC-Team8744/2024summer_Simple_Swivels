@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7378464742657148,
-        "y": 4.471197393176075
+        "x": 0.7,
+        "y": 4.34
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4639183401041687,
-        "y": 4.110503627566004
+        "x": 1.7,
+        "y": 4.34
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4778402229639247,
-        "y": 4.11270397720039
+        "x": 1.3761819072933925,
+        "y": 5.50658791458428
       },
       "prevControl": {
-        "x": 1.6981350710197989,
-        "y": 4.0823976198561285
+        "x": 2.3156260397027837,
+        "y": 5.015186368400906
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "2pss1"
     }
   ],
   "rotationTargets": [],
@@ -38,14 +38,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.8335500227524165,
+    "velocity": 0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "gaming folder",
+  "folder": "2 piece source side",
   "previewStartingState": {
-    "rotation": -60.32691788792221,
+    "rotation": -60.51999999999998,
     "velocity": 0
   },
   "useDefaultConstraints": true

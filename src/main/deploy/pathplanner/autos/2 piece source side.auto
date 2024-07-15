@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.43,
-      "y": 2.83
+      "x": 0.7,
+      "y": 4.34
     },
-    "rotation": 0
+    "rotation": -60.51999999999998
   },
   "command": {
     "type": "sequential",
@@ -14,49 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "4pssac1"
+            "pathName": "2pss1"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "4pssac1"
+            "name": "Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4pssac2"
+            "pathName": "2pss2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "4pssac2"
+            "name": "Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4pssac3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "4pssac3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "4pssac4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "4pssac3"
+            "pathName": "2pss3"
           }
         }
       ]

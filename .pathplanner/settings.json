@@ -3,19 +3,12 @@
   "robotLength": 0.8,
   "holonomicMode": true,
   "pathFolders": [
-    "4 piece all left 2 center",
-    "4 piece all amp center right start",
     "4 piece wing",
-    "4 piece source side all center",
-    "Bens",
-    "LeftBaseLine(2)",
-    "MiddleBaseLine(2)",
-    "Old autos"
+    "2 piece source side",
+    "Shoot and Leave"
   ],
   "autoFolders": [
-    "Bens",
-    "Comp Autos",
-    "Test Autos"
+    "Comp Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

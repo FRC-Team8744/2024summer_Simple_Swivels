@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8085563183648736,
-        "y": 0.7930268454454622
+        "x": 1.3617289206409402,
+        "y": 5.56439986119409
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9530801650994687,
-        "y": 0.7976159507775192
+        "x": 1.6507886536899834,
+        "y": 3.8011354895949236
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SaL1"
     },
     {
       "anchor": {
-        "x": 1.9260417769493865,
-        "y": 1.7475961964446294
+        "x": 2.5324208394895664,
+        "y": 1.0261620523241057
       },
       "prevControl": {
-        "x": 1.8104226995573856,
-        "y": 1.7475961964446294
+        "x": 1.5324208394895664,
+        "y": 1.0261620523241057
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 88.45184230102204,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Bens",
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "folder": "Shoot and Leave",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }

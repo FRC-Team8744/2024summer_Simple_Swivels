@@ -13,15 +13,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ConstantsOffboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.commands.IntakeRing;
+import frc.robot.commands.Outtake;
+import frc.robot.commands.RunShooter;
+import frc.robot.commands.ShootRing;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDS;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+
 //import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -33,6 +44,9 @@ public class RobotContainer {
   // The robot's subsystems
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final LEDS m_leds = new LEDS();
+  public final Shooter m_shooter = new Shooter();
+  public final Index m_index = new Index();
+  public final Intake m_intake = new Intake();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -50,7 +64,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_leds.ledOn(0, 0, 255);
+    // m_leds.ledOn(0, 0, 255);
+
+    NamedCommands.registerCommand("Shoot", new ShootRing(m_shooter, m_index));
+    NamedCommands.registerCommand("Intake", new IntakeRing(m_intake, m_index));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -81,15 +98,27 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-      // m_driver.leftTrigger().whileTrue(new AmpShoot(m_climber, m_shooter, m_index, m_leds));
-      // new JoystickButton(m_driverController, Button.kA.value)
-      // .whileTrue(new ClimbDown(m_climber));
-      // new POVButton(m_driverController, 180)
-      // .whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
-      new JoystickButton(m_driverController, Button.kBack.value)
-      .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
-      new JoystickButton(m_driverController, Button.kLeftStick.value)
-      .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
+    // Configure your button bindings here
+
+    m_driver.rightTrigger().toggleOnTrue(new RunShooter(m_shooter));
+
+    m_driver.leftBumper().whileTrue(new IntakeRing(m_intake, m_index));
+    m_driver.rightBumper().whileTrue(new RunShooter(m_shooter));
+
+    m_driver.x().whileTrue(new Outtake(m_intake, m_index));
+    m_driver.pov(180).whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
+    m_driver.back().whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
+    m_driver.leftStick().toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
+
+    /* m_driver.leftTrigger().whileTrue(new AmpShoot(m_climber, m_shooter, m_index, m_leds));
+    new JoystickButton(m_driverController, Button.kA.value)
+    .whileTrue(new ClimbDown(m_climber)); 
+    new POVButton(m_driverController, 180) // Down on D-Pad
+    .whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
+    new JoystickButton(m_driverController, Button.kBack.value)
+    .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
+    new JoystickButton(m_driverController, Button.kLeftStick.value)
+    .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput())); */
   }
  public Command getAutonomousCommand() {return m_autoChooser.getSelected();}
 }

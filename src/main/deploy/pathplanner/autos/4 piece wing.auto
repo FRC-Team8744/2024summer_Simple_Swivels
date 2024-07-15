@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ShootRingWoofer"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "4 piece close middle"
@@ -26,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootRingWoofer"
+            "name": "Shoot"
           }
         },
         {
@@ -38,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootRingWoofer"
+            "name": "Shoot"
           }
         },
         {
@@ -50,7 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootRingWoofer"
+            "name": "Shoot"
           }
         }
       ]

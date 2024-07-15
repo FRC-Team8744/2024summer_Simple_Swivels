@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7071301441350655,
-        "y": 6.726042503963363
+        "x": 1.3761819072933925,
+        "y": 5.50658791458428
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7791849537187452,
-        "y": 6.7994709155786826
+        "x": 2.3761819072933923,
+        "y": 5.50658791458428
       },
       "isLocked": false,
-      "linkedName": "StartingPoint1"
+      "linkedName": "2pss1"
     },
     {
       "anchor": {
-        "x": 2.8806111279485536,
-        "y": 5.565873600441298
+        "x": 2.2289081197880707,
+        "y": 0.7371023192750615
       },
       "prevControl": {
-        "x": 2.6162688461334,
-        "y": 5.874272929225644
+        "x": 1.2289081197880707,
+        "y": 0.7371023192750615
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MiddleBaseLine1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -38,12 +38,15 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "MiddleBaseLine(2)",
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "folder": "2 piece source side",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }

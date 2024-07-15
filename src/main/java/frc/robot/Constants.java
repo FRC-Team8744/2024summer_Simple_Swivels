@@ -21,11 +21,11 @@ public final class Constants {
 
 
   // public static final class MechanismConstants {
-  //   public static final int kFrontIntakePort = 15;
-  //   public static final int kRearIntakePort = 16;
-  //   public static final int kTopShooterPort = 17; // Runs forward
-  //   public static final int kIndexShooterPort = 18;
-  //   public static final int kBottomShooterPort = 19; // Runs backward
+    public static final int kIntakePort = 15;
+    // public static final int kRearIntakePort = 16;
+    public static final int kTopShooterPort = 17; // Runs forward
+    public static final int kIndexerPort = 18;
+    public static final int kBottomShooterPort = 19; // Runs backward
   //   public static final int kRightPivotShooterPort = 20;
   //   public static final int kLeftPivotShooterPort = 21; // Has absolute encoder
   //   public static final int kUndertakerIntakePort = 22;
