@@ -37,7 +37,7 @@ public class Multi_IMU extends SubsystemBase {
     switch (m_whoami) {
       case "Swivels":
           m_imuSelected = IMUConstants.PIGEON2;
-          m_pigeon1_Enable = true;
+          m_pigeon2_Enable = true;
         break;
     
       case "NoNo":
@@ -47,7 +47,7 @@ public class Multi_IMU extends SubsystemBase {
     
       default:
           m_imuSelected = IMUConstants.PIGEON2;
-          m_pigeon1_Enable = true;
+          m_pigeon2_Enable = true;
         break;
     }
 

@@ -49,7 +49,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   Joystick m_Joystick = new Joystick(OIConstants.kDriverControllerPort);
 
-  private final String controllerMode = "x";
 
   // The imu sensor
   public final Multi_IMU m_imu = new Multi_IMU();
@@ -89,6 +88,7 @@ public class DriveSubsystem extends SubsystemBase {
       SwerveConstants.kFrontLeftDriveMotorPort,
       SwerveConstants.kFrontLeftTurningMotorPort,
       SwerveConstants.kFrontLeftMagEncoderPort,
+      SwerveConstants.kFrontLeftInvertDrive,
       offset_FL);
 
   m_rearLeft =
@@ -96,6 +96,7 @@ public class DriveSubsystem extends SubsystemBase {
       SwerveConstants.kRearLeftDriveMotorPort,
       SwerveConstants.kRearLeftTurningMotorPort,
       SwerveConstants.kRearLeftMagEncoderPort,
+      SwerveConstants.kRearLeftInvertDrive,
       offset_RL);
 
   m_frontRight =
@@ -103,6 +104,7 @@ public class DriveSubsystem extends SubsystemBase {
       SwerveConstants.kFrontRightDriveMotorPort,
       SwerveConstants.kFrontRightTurningMotorPort,
       SwerveConstants.kFrontRightMagEncoderPort,
+      SwerveConstants.kFrontRightInvertDrive,
       offset_FR);
 
   m_rearRight =
@@ -110,6 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
       SwerveConstants.kRearRightDriveMotorPort,
       SwerveConstants.kRearRightTurningMotorPort,
       SwerveConstants.kRearRightMagEncoderPort,
+      SwerveConstants.kRearRightInvertDrive,
       offset_RR);
 
   // Odometry class for tracking robot pose
@@ -209,6 +212,11 @@ public class DriveSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("FR Turn Enc", m_frontRight.getPosition().angle.getDegrees());
       SmartDashboard.putNumber("RL Turn Enc", m_rearLeft.getPosition().angle.getDegrees());
       SmartDashboard.putNumber("RR Turn Enc", m_rearRight.getPosition().angle.getDegrees());
+
+      SmartDashboard.putNumber("FL drive Enc", m_frontLeft.getPosition().distanceMeters);
+      SmartDashboard.putNumber("FR drive Enc", m_frontRight.getPosition().distanceMeters);
+      SmartDashboard.putNumber("RL drive Enc", m_rearLeft.getPosition().distanceMeters);
+      SmartDashboard.putNumber("RR drive Enc", m_rearRight.getPosition().distanceMeters);
     }
 }
 

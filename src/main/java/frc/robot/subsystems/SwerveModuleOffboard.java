@@ -34,6 +34,7 @@ public class SwerveModuleOffboard {
   // Swerve module absolute encoder (wheel angle)
   private final CANcoder m_canCoder;
   private final double m_canCoderOffsetDegrees;
+  private final boolean m_invertDriveMotor;
   //private double lastAngle;
 
   SwerveModuleState state;
@@ -47,12 +48,13 @@ public class SwerveModuleOffboard {
    * @param magEncoderID The CAN ID of the magnetic encoder.
    * @param magEncoderOffsetDegrees The absolute offset of the magnetic encoder.
    */
-  public SwerveModuleOffboard(int driveMotorID, int turningMotorID, int magEncoderID,
+  public SwerveModuleOffboard(int driveMotorID, int turningMotorID, int magEncoderID, boolean invertDrive,
       double magEncoderOffsetDegrees) {
     // Create drive motor objects
     m_driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     m_driveEncoder = m_driveMotor.getEncoder();
     m_drivePID = m_driveMotor.getPIDController();
+   
 
     // Create turning motor objects
     m_turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);
@@ -62,6 +64,7 @@ public class SwerveModuleOffboard {
     // Create steering encoder objects (high resolution encoder)
     m_canCoder = new CANcoder(magEncoderID, "rio");
     m_canCoderOffsetDegrees = magEncoderOffsetDegrees;
+    m_invertDriveMotor = invertDrive;
 
     configureDevices();
     //lastAngle = getState().angle.getRadians();
@@ -164,6 +167,7 @@ public class SwerveModuleOffboard {
     // Drive motor configuration.
     m_driveMotor.restoreFactoryDefaults();
     m_driveMotor.setSmartCurrentLimit(ConstantsOffboard.DRIVE_CURRENT_LIMIT);
+     m_driveMotor.setInverted(m_invertDriveMotor);
  
     if (ConstantsOffboard.DRIVE_MOTOR_PROFILED_MODE) {
       m_drivePID.setP(ConstantsOffboard.DRIVE_KP_PROFILED);

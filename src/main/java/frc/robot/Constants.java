@@ -11,7 +11,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
-  public static final int kDebugLevel = 0; // 0 = None, 1 = Errors, 2 = Info, 3 = Debug and USB data log
+  public static final int kDebugLevel = 3; // 0 = None, 1 = Errors, 2 = Info, 3 = Debug and USB data log
   
   public static final int kMaxSpeedPercentAuto = 100;
   public static final int kMaxSpeedPercentTeleop = 100;
@@ -20,18 +20,14 @@ public final class Constants {
 
 
 
-  // public static final class MechanismConstants {
-  //   public static final int kFrontIntakePort = 15;
-  //   public static final int kRearIntakePort = 16;
-  //   public static final int kTopShooterPort = 17; // Runs forward
-  //   public static final int kIndexShooterPort = 18;
-  //   public static final int kBottomShooterPort = 19; // Runs backward
-  //   public static final int kRightPivotShooterPort = 20;
-  //   public static final int kLeftPivotShooterPort = 21; // Has absolute encoder
-  //   public static final int kUndertakerIntakePort = 22;
-  //   public static final int kLeftClimberPort = 23;
-  //   public static final int kRightClimberPort = 24;
-  // }
+  public static final class MechanismConstants {
+    public static final int kFrontIntakePort = 16;
+    public static final int kTopShooterPort = 15; 
+    public static final int kBottomShooterPort = 14;
+    public static final int kIndexShooterPort = 17;
+
+    public static final double intakeSpeed = 0.25;
+  }
 
   public static final class SwerveConstants {
     public static final double kMaxSpeedMetersPerSecond = (4.4 * kMaxSpeedPercentAuto) / 100;
@@ -42,15 +38,15 @@ public final class Constants {
     // We use NWU here because the rest of the library, and math in general, use NWU axes convention.
     // https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html#axis-conventions
   
-    public static final int kFrontLeftDriveMotorPort = 5;
+    public static final int kFrontLeftDriveMotorPort = 3;
     public static final int kFrontRightDriveMotorPort = 1;
-    public static final int kRearRightDriveMotorPort = 4;
+    public static final int kRearRightDriveMotorPort = 5;
     public static final int kRearLeftDriveMotorPort = 8;
     
     
-    public static final int kFrontLeftTurningMotorPort = 6;
+    public static final int kFrontLeftTurningMotorPort = 4;
     public static final int kFrontRightTurningMotorPort = 2;
-     public static final int kRearRightTurningMotorPort = 3;
+     public static final int kRearRightTurningMotorPort = 6;
     public static final int kRearLeftTurningMotorPort = 7;
    
     
@@ -59,10 +55,16 @@ public final class Constants {
     public static final int kFrontRightMagEncoderPort = 9;
      public static final int kRearRightMagEncoderPort = 12;
     public static final int kRearLeftMagEncoderPort = 11;
+
+    public static final boolean kFrontLeftInvertDrive = false;
+    public static final boolean kFrontRightInvertDrive = true;
+     public static final boolean kRearRightInvertDrive = false;
+    public static final boolean kRearLeftInvertDrive = true;
+   
    
 
     // Only disable the steering angle optimizer when measuring the CANcoder offsets!
-    public static final boolean DISABLE_ANGLE_OPTIMIZER = false;
+    public static final boolean DISABLE_ANGLE_OPTIMIZER = true;
 
     // Note: Zeroing the CanCoder in Tuner X doesn't seem to affect the reported absolute position.
     public static final double kFrontLeftMagEncoderOffsetDegrees_NoNo = 240.55;
@@ -70,10 +72,10 @@ public final class Constants {
     public static final double kRearLeftMagEncoderOffsetDegrees_NoNo = 241.87;
     public static final double kRearRightMagEncoderOffsetDegrees_NoNo = 133.46;
 
-    public static final double kFrontLeftMagEncoderOffsetDegrees_Swivels = 81.12;
-    public static final double kFrontRightMagEncoderOffsetDegrees_Swivels = 133.77;
-    public static final double kRearLeftMagEncoderOffsetDegrees_Swivels = 11.25;
-    public static final double kRearRightMagEncoderOffsetDegrees_Swivels = 66.71;
+    public static final double kFrontLeftMagEncoderOffsetDegrees_Swivels = -112.763671875;
+    public static final double kFrontRightMagEncoderOffsetDegrees_Swivels = 313.681640625;
+    public static final double kRearLeftMagEncoderOffsetDegrees_Swivels = -168.837890625;
+    public static final double kRearRightMagEncoderOffsetDegrees_Swivels = -98.7890625;
 
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = Units.inchesToMeters(20.472);

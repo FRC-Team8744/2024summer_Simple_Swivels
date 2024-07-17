@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ConstantsOffboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.commands.runIntake;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDS;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -33,6 +35,7 @@ public class RobotContainer {
   // The robot's subsystems
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final LEDS m_leds = new LEDS();
+  public final Intake m_spinIntake = new Intake();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -90,6 +93,8 @@ public class RobotContainer {
       .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
       new JoystickButton(m_driverController, Button.kLeftStick.value)
       .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
+      new JoystickButton(m_driverController, Button.kB.value)
+      .whileTrue(new runIntake(m_spinIntake));
   }
  public Command getAutonomousCommand() {return m_autoChooser.getSelected();}
 }
