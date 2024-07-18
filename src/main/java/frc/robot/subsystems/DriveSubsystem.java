@@ -115,6 +115,8 @@ public class DriveSubsystem extends SubsystemBase {
       SwerveConstants.kRearRightInvertDrive,
       offset_RR);
 
+  // resetEncoders();
+
   // Odometry class for tracking robot pose
   m_odometry =
       new SwerveDriveOdometry(
