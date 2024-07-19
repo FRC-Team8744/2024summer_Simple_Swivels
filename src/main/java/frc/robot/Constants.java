@@ -26,8 +26,9 @@ public final class Constants {
     public static final int kBottomShooterPort = 14;
     public static final int kIndexShooterPort = 17;
 
-    public static final double intakeSpeed = 0.25;
-    public static final double indexerSpeed = 0.25;
+    public static final double intakeSpeed = 0.50;
+    public static final double indexerSpeed = 0.30;
+    public static final double shooterSpeed = 1.00;
   }
 
   public static final class SwerveConstants {

@@ -13,10 +13,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ConstantsOffboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.commands.RunIntakeandIndex;
+import frc.robot.commands.runIndexer;
 import frc.robot.commands.runIntake;
+import frc.robot.commands.shoot;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDS;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -36,6 +41,8 @@ public class RobotContainer {
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final LEDS m_leds = new LEDS();
   public final Intake m_spinIntake = new Intake();
+  public final Indexer m_spinIndex = new Indexer();
+  public final Shooter m_spinShooter = new Shooter();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -98,6 +105,13 @@ public class RobotContainer {
       .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
       new JoystickButton(m_driverController, Button.kB.value)
       .whileTrue(new runIntake(m_spinIntake));
+      new JoystickButton(m_driverController, Button.kA.value)
+      .whileTrue(new runIndexer(m_spinIndex));
+       new JoystickButton(m_driverController, Button.kX.value)
+      .whileTrue(new shoot(m_spinShooter));
+      new JoystickButton(m_driverController, Button.kY.value)
+      .whileTrue(new RunIntakeandIndex(m_spinIntake,m_spinIndex));
+
   }
  public Command getAutonomousCommand() {return m_autoChooser.getSelected();}
 }

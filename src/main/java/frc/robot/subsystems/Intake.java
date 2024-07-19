@@ -17,11 +17,11 @@ public class Intake extends SubsystemBase {
   public Intake() {}
 
   public void moveIntake(double speed) {
-    frontIntakeSparkMax.set(-speed); 
+    frontIntakeSparkMax.set(speed); 
   }
  
   public void reverseIntake(double speed) {
-    frontIntakeSparkMax.set(speed); 
+    frontIntakeSparkMax.set(-speed); 
   }
 
   public void motorOff() {
