@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ConstantsOffboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.commands.Outtake;
 import frc.robot.commands.RunIntakeandIndex;
+import frc.robot.commands.SourceIntake;
+import frc.robot.commands.ampShoot;
 import frc.robot.commands.runIndexer;
 import frc.robot.commands.runIntake;
 import frc.robot.commands.shoot;
@@ -78,7 +81,7 @@ public class RobotContainer {
                   m_xspeedLimiter.calculate( -m_driverController.getLeftY() )*SwerveConstants.kMaxSpeedTeleop,
                   m_yspeedLimiter.calculate( -m_driverController.getLeftX() )*SwerveConstants.kMaxSpeedTeleop,
                   m_rotLimiter.calculate( -m_driverController.getRightX() )*ConstantsOffboard.MAX_ANGULAR_RADIANS_PER_SECOND,
-                  false), //field orintation stuffs
+                  true), //field orintation stuffs
           m_robotDrive));
 
     m_autoChooser = AutoBuilder.buildAutoChooser();  // Default auto will be 'Commands.none()'
@@ -99,18 +102,24 @@ public class RobotContainer {
       // .whileTrue(new ClimbDown(m_climber));
       // new POVButton(m_driverController, 180)
       // .whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
+      m_driver.rightTrigger().whileTrue(new ampShoot(m_spinShooter, m_spinIndex));
+      m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
+      m_driver.rightBumper().whileTrue(new shoot(m_spinShooter, m_spinIndex));
+      m_driver.x().whileTrue(new Outtake(m_spinIntake, m_spinIndex));
+      m_driver.y().whileTrue(new SourceIntake(m_spinIndex, m_spinShooter));
+      m_driver.a().whileTrue(new runIndexer(m_spinIndex));
       new JoystickButton(m_driverController, Button.kBack.value)
       .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
       new JoystickButton(m_driverController, Button.kLeftStick.value)
       .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
       new JoystickButton(m_driverController, Button.kB.value)
       .whileTrue(new runIntake(m_spinIntake));
-      new JoystickButton(m_driverController, Button.kA.value)
-      .whileTrue(new runIndexer(m_spinIndex));
-       new JoystickButton(m_driverController, Button.kX.value)
-      .whileTrue(new shoot(m_spinShooter));
-      new JoystickButton(m_driverController, Button.kY.value)
-      .whileTrue(new RunIntakeandIndex(m_spinIntake,m_spinIndex));
+      // new JoystickButton(m_driverController, Button.kA.value)
+      // .whileTrue(new runIndexer(m_spinIndex));
+      //  new JoystickButton(m_driverController, Button.kX.value)
+      // .whileTrue(new shoot(m_spinShooter, m_spinIndex));
+      // new JoystickButton(m_driverController, Button.kY.value)
+      // .whileTrue(new RunIntakeandIndex(m_spinIntake,m_spinIndex));
 
   }
  public Command getAutonomousCommand() {return m_autoChooser.getSelected();}

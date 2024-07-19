@@ -9,13 +9,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanismConstants;
 
 public class Shooter extends SubsystemBase {
   private CANSparkMax topShooterSparkMax = new CANSparkMax(MechanismConstants.kTopShooterPort, MotorType.kBrushless);
   private CANSparkMax bottomShooterSparkMax = new CANSparkMax(MechanismConstants.kBottomShooterPort, MotorType.kBrushless);
-    private SparkPIDController m_pidController;
+
+  private RelativeEncoder topShooterEncoder = topShooterSparkMax.getEncoder(); 
+  private SparkPIDController m_pidController;
   // private RelativeEncoder m_encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
   /** Creates a new Shooter. */
@@ -43,20 +46,50 @@ public class Shooter extends SubsystemBase {
     // m_pidController.setFF(kFF);
     // m_pidController.setOutputRange(kMinOutput, kMaxOutput);
 
-    bottomShooterSparkMax.follow(topShooterSparkMax);
+    // bottomShooterSparkMax.follow(topShooterSparkMax);
+
+    topShooterSparkMax.setSmartCurrentLimit(40);
+    bottomShooterSparkMax.setSmartCurrentLimit(40);
   }
 
   public void shootShooter(double speed){
     topShooterSparkMax.set(speed); 
+    bottomShooterSparkMax.set(speed);
     // m_pidController.setReference(speed*maxRPM, CANSparkMax.ControlType.kVelocity);
     // bottomShooterSparkMax.set(speed);
   }
+
+  public void reverseShooter(double speed) {
+    topShooterSparkMax.set(-speed);
+    bottomShooterSparkMax.set(-speed);
+  }
+
   public void motorOff() {
     topShooterSparkMax.stopMotor();
     // bottomShooterSparkMax.stopMotor();
   }
+
+  public boolean isAtSpeed() {
+    if (topShooterEncoder.getVelocity() >= 1850) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean isAtAmpSpeed() {
+    if (topShooterEncoder.getVelocity() >= 1850) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Top Shooter RPM", topShooterEncoder.getVelocity());
   }
 }

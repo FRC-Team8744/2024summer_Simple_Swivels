@@ -9,29 +9,29 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
-public class shoot extends Command {
+public class ampShoot extends Command {
   /** Creates a new shoot. */
   private final Shooter m_Shooter;
   private final Indexer m_Indexer;
-  public shoot(Shooter runShooter, Indexer runIndexer) {
+  public ampShoot(Shooter runShooter, Indexer runIndexer) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Shooter = runShooter;
     m_Indexer = runIndexer;
     addRequirements(m_Shooter);
-    addRequirements(m_Indexer);
+    // addRequirements(m_Indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Shooter.shootShooter(Constants.MechanismConstants.shooterSpeed);
+    m_Shooter.shootShooter(Constants.MechanismConstants.ampShooterSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_Shooter.isAtSpeed()) {
-      m_Indexer.moveIndexer(1);
+    if (m_Shooter.isAtAmpSpeed()) {
+      m_Indexer.moveIndexer(Constants.MechanismConstants.ampShooterSpeed);
     }
   }
 

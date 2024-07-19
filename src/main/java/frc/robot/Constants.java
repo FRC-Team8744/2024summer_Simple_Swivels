@@ -14,9 +14,10 @@ public final class Constants {
   public static final int kDebugLevel = 0; // 0 = None, 1 = Errors, 2 = Info, 3 = Debug and USB data log
   
   public static final int kMaxSpeedPercentAuto = 100;
-  public static final int kMaxSpeedPercentTeleop = 100;
+  public static final int kMaxSpeedPercentTeleop = 50;
   public static final int kMaxAccelerationPercent = 100;
-  public static final double kDriverSpeedLimit = 0.1; // sets how much the max speed is modified by when you press down on the left stick basicly make go slower the default is 1 btw 
+  public static final double kDriverSpeedLimitTran = 0.1; // sets how much the max speed is modified by when you press down on the left stick basicly make go slower the default is 1 btw 
+  public static final double kDriverSpeedLimitRot = 0.1;
 
 
 
@@ -28,7 +29,8 @@ public final class Constants {
 
     public static final double intakeSpeed = 0.50;
     public static final double indexerSpeed = 0.30;
-    public static final double shooterSpeed = 1.00;
+    public static final double shooterSpeed = 1.0;
+    public static final double ampShooterSpeed = 0.70;
   }
 
   public static final class SwerveConstants {

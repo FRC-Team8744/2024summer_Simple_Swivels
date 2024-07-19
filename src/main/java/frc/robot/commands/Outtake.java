@@ -7,39 +7,36 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
-public class shoot extends Command {
-  /** Creates a new shoot. */
-  private final Shooter m_Shooter;
-  private final Indexer m_Indexer;
-  public shoot(Shooter runShooter, Indexer runIndexer) {
+public class Outtake extends Command {
+  private final Intake m_intake;
+  private final Indexer m_index;
+  /** Creates a new Outtake. */
+  public Outtake(Intake intake, Indexer index) {
+    m_intake = intake;
+    m_index = index;
+    addRequirements(m_intake);
+    addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Shooter = runShooter;
-    m_Indexer = runIndexer;
-    addRequirements(m_Shooter);
-    addRequirements(m_Indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Shooter.shootShooter(Constants.MechanismConstants.shooterSpeed);
+    m_intake.reverseIntake(Constants.MechanismConstants.intakeSpeed);
+    m_index.reverseIndexer(Constants.MechanismConstants.indexerSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if (m_Shooter.isAtSpeed()) {
-      m_Indexer.moveIndexer(1);
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Shooter.motorOff();
-    m_Indexer.motorOff();
+    m_intake.motorOff();
+    m_index.motorOff();
   }
 
   // Returns true when the command should end.
