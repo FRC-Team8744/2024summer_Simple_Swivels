@@ -23,14 +23,14 @@ public final class Constants {
 
   public static final class MechanismConstants {
     public static final int kFrontIntakePort = 16;
-    public static final int kTopShooterPort = 15; 
-    public static final int kBottomShooterPort = 14;
+    public static final int kTopShooterPort = 14; 
+    public static final int kBottomShooterPort = 15;
     public static final int kIndexShooterPort = 17;
 
     public static final double intakeSpeed = 0.50;
     public static final double indexerSpeed = 0.30;
     public static final double shooterSpeed = 1.0;
-    public static final double ampShooterSpeed = 0.70;
+    public static final double ampShooterSpeed = 0.27;
   }
 
   public static final class SwerveConstants {
@@ -47,22 +47,19 @@ public final class Constants {
     public static final int kRearRightDriveMotorPort = 5;
     public static final int kRearLeftDriveMotorPort = 8;
     
-    
     public static final int kFrontLeftTurningMotorPort = 4;
     public static final int kFrontRightTurningMotorPort = 2;
-     public static final int kRearRightTurningMotorPort = 6;
+    public static final int kRearRightTurningMotorPort = 6;
     public static final int kRearLeftTurningMotorPort = 7;
-   
-    
     
     public static final int kFrontLeftMagEncoderPort = 10;
     public static final int kFrontRightMagEncoderPort = 9;
-     public static final int kRearRightMagEncoderPort = 12;
+    public static final int kRearRightMagEncoderPort = 12;
     public static final int kRearLeftMagEncoderPort = 11;
 
     public static final boolean kFrontLeftInvertDrive = true;
     public static final boolean kFrontRightInvertDrive = true;
-     public static final boolean kRearRightInvertDrive = false;
+    public static final boolean kRearRightInvertDrive = false;
     public static final boolean kRearLeftInvertDrive = false;
    
    
@@ -94,8 +91,6 @@ public final class Constants {
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),  // Front Right Quadrant
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2),  // Rear Left Quadrant
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));  // Rear Right Quadrant
-
-
 
     public static int kSwerveFL_enum = 0;
     public static int kSwerveFR_enum = 1;

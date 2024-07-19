@@ -31,7 +31,8 @@ public class ampShoot extends Command {
   @Override
   public void execute() {
     if (m_Shooter.isAtAmpSpeed()) {
-      m_Indexer.moveIndexer(Constants.MechanismConstants.ampShooterSpeed);
+      // m_Indexer.moveIndexer(Constants.MechanismConstants.ampShooterSpeed);
+      m_Indexer.moveIndexer(1);
     }
   }
 

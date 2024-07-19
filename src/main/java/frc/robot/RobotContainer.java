@@ -27,6 +27,7 @@ import frc.robot.subsystems.LEDS;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -55,11 +56,10 @@ public class RobotContainer {
 
   // A chooser for autonomous commands
   private final SendableChooser<Command> m_autoChooser;
-    // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
+  // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
   private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -108,6 +108,7 @@ public class RobotContainer {
       m_driver.x().whileTrue(new Outtake(m_spinIntake, m_spinIndex));
       m_driver.y().whileTrue(new SourceIntake(m_spinIndex, m_spinShooter));
       m_driver.a().whileTrue(new runIndexer(m_spinIndex));
+      m_driver.pov(180).whileTrue(Commands.runOnce(() -> m_spinShooter.motorOff()));
       new JoystickButton(m_driverController, Button.kBack.value)
       .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
       new JoystickButton(m_driverController, Button.kLeftStick.value)

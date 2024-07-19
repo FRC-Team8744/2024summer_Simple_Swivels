@@ -11,6 +11,7 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.MechanismConstants;
 
 public class Shooter extends SubsystemBase {
@@ -54,9 +55,14 @@ public class Shooter extends SubsystemBase {
 
   public void shootShooter(double speed){
     topShooterSparkMax.set(speed); 
-    bottomShooterSparkMax.set(speed);
+    bottomShooterSparkMax.set(speed / 2);
     // m_pidController.setReference(speed*maxRPM, CANSparkMax.ControlType.kVelocity);
     // bottomShooterSparkMax.set(speed);
+  }
+
+  public void ampShootShooter(double speed) {
+    topShooterSparkMax.set(speed);
+    bottomShooterSparkMax.set(speed / 2);
   }
 
   public void reverseShooter(double speed) {
@@ -66,11 +72,11 @@ public class Shooter extends SubsystemBase {
 
   public void motorOff() {
     topShooterSparkMax.stopMotor();
-    // bottomShooterSparkMax.stopMotor();
+    bottomShooterSparkMax.stopMotor();
   }
 
   public boolean isAtSpeed() {
-    if (topShooterEncoder.getVelocity() >= 1850) {
+    if (topShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.shooterSpeed) {
       return true;
     }
     else {
@@ -79,7 +85,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isAtAmpSpeed() {
-    if (topShooterEncoder.getVelocity() >= 1850) {
+    if (topShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.ampShooterSpeed) {
       return true;
     }
     else {

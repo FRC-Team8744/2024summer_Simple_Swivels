@@ -12,7 +12,7 @@ import frc.robot.Constants.MechanismConstants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
-   private CANSparkMax indexerSparkMax = new CANSparkMax(MechanismConstants.kIndexShooterPort, MotorType.kBrushless);
+  private CANSparkMax indexerSparkMax = new CANSparkMax(MechanismConstants.kIndexShooterPort, MotorType.kBrushless);
   public Indexer() {}
 
   public void moveIndexer(double speed){
