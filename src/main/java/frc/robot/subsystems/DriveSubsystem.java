@@ -63,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
   
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
-    MyName = Preferences.getString("RobotName", "NoDefault");
+    MyName = Preferences.getString("RobotName", "Swivels");
     System.out.println("Robot ID: " + MyName);
     switch(MyName) {
       case "Swivels":

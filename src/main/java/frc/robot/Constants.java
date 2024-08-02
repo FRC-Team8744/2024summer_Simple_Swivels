@@ -61,22 +61,20 @@ public final class Constants {
     public static final boolean kFrontRightInvertDrive = true;
     public static final boolean kRearRightInvertDrive = false;
     public static final boolean kRearLeftInvertDrive = false;
-   
-   
 
     // Only disable the steering angle optimizer when measuring the CANcoder offsets!
     public static final boolean DISABLE_ANGLE_OPTIMIZER = false;
 
     // Note: Zeroing the CanCoder in Tuner X doesn't seem to affect the reported absolute position.
-    public static final double kFrontLeftMagEncoderOffsetDegrees_NoNo = 240.55;
-    public static final double kFrontRightMagEncoderOffsetDegrees_NoNo = 317.94;
-    public static final double kRearLeftMagEncoderOffsetDegrees_NoNo = 241.87;
-    public static final double kRearRightMagEncoderOffsetDegrees_NoNo = 133.46;
+    public static final double kFrontLeftMagEncoderOffsetDegrees_NoNo = 0.188232*360;
+    public static final double kFrontRightMagEncoderOffsetDegrees_NoNo = -0.125000*360;
+    public static final double kRearLeftMagEncoderOffsetDegrees_NoNo = -0.465332*360;
+    public static final double kRearRightMagEncoderOffsetDegrees_NoNo = 0.225830*360;
 
-    public static final double kFrontLeftMagEncoderOffsetDegrees_Swivels = 0.184814*360; //-112.763671875;
-    public static final double kFrontRightMagEncoderOffsetDegrees_Swivels = 0.874756*360; //313.681640625;
-    public static final double kRearLeftMagEncoderOffsetDegrees_Swivels = 0.030762*360; //-168.837890625;
-    public static final double kRearRightMagEncoderOffsetDegrees_Swivels = 0.725830*360; //-98.7890625;
+    public static final double kFrontLeftMagEncoderOffsetDegrees_Swivels = 0.188232*360; //-112.763671875;
+    public static final double kFrontRightMagEncoderOffsetDegrees_Swivels = -0.125000*360; //313.681640625;
+    public static final double kRearLeftMagEncoderOffsetDegrees_Swivels = -0.465332*360; //-168.837890625;
+    public static final double kRearRightMagEncoderOffsetDegrees_Swivels = 0.225830*360; //-98.7890625;
 
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = Units.inchesToMeters(20.472);
