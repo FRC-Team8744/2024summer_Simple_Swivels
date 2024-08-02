@@ -45,7 +45,7 @@ public class RobotContainer {
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final LEDS m_leds = new LEDS();
   public final Intake m_spinIntake = new Intake();
-  public final Indexer m_spinIndex = new Indexer();
+  //public final Indexer m_spinIndex = new Indexer();
   public final Shooter m_spinShooter = new Shooter();
 
   // The driver's controller
@@ -102,12 +102,12 @@ public class RobotContainer {
       // .whileTrue(new ClimbDown(m_climber));
       // new POVButton(m_driverController, 180)
       // .whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
-      m_driver.rightTrigger().whileTrue(new ampShoot(m_spinShooter, m_spinIndex));
-      m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
-      m_driver.rightBumper().whileTrue(new shoot(m_spinShooter, m_spinIndex));
-      m_driver.x().whileTrue(new Outtake(m_spinIntake, m_spinIndex));
-      m_driver.y().whileTrue(new SourceIntake(m_spinIndex, m_spinShooter));
-      m_driver.a().whileTrue(new runIndexer(m_spinIndex));
+     // m_driver.rightTrigger().whileTrue(new ampShoot(m_spinShooter, m_spinIndex));
+      //m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
+      //m_driver.rightBumper().whileTrue(new shoot(m_spinShooter, m_spinIndex));
+      //m_driver.x().whileTrue(new Outtake(m_spinIntake, m_spinIndex));
+      //m_driver.y().whileTrue(new SourceIntake(m_spinIndex, m_spinShooter));
+      //m_driver.a().whileTrue(new runIndexer(m_spinIndex));
       m_driver.pov(180).whileTrue(Commands.runOnce(() -> m_spinShooter.motorOff()));
       new JoystickButton(m_driverController, Button.kBack.value)
       .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
