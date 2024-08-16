@@ -7,32 +7,40 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
-public class runIndexer extends Command {
-  /** Creates a new runIndexer. */
-  private final Indexer m_index;
-  private final double m_direction;
-  public runIndexer(Indexer indexer , double direction) {
+public class Ampshot extends Command {
+  /** Creates a new shoot. */
+  private final Shooter m_Shooter;
+  private final Indexer m_Indexer;
+  public Ampshot(Shooter runShooter, Indexer runIndexer) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_index = indexer;
-    m_direction = direction;
-    addRequirements(m_index);
+    m_Shooter = runShooter;
+    m_Indexer = runIndexer;
+    addRequirements(m_Shooter);
+    // addRequirements(m_Indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_index.moveIndexer(Constants.MechanismConstants.indexerSpeed * m_direction);
+    m_Shooter.shootShooter(Constants.MechanismConstants.ampShooterSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (m_Shooter.isAtAmpSpeed()) {
+      // m_Indexer.moveIndexer(Constants.MechanismConstants.AmpshoterSpeed);
+      m_Indexer.moveIndexer(0.5);
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_index.motorOff();
+    m_Shooter.motorOff();
+    m_Indexer.motorOff();
   }
 
   // Returns true when the command should end.
@@ -41,3 +49,4 @@ public class runIndexer extends Command {
     return false;
   }
 }
+

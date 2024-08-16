@@ -12,26 +12,29 @@ import frc.robot.subsystems.Shooter;
 public class shoot extends Command {
   /** Creates a new shoot. */
   private final Shooter m_Shooter;
-  private final Indexer m_Indexer;
-  public shoot(Shooter runShooter, Indexer runIndexer) {
+  private final double m_direction;
+  // private final Indexer m_Indexer;
+  public shoot(Shooter runShooter , double direction) {
+    m_direction = direction;
     // Use addRequirements() here to declare subsystem dependencies.
     m_Shooter = runShooter;
-    m_Indexer = runIndexer;
+    // m_Indexer = runIndexer;
     addRequirements(m_Shooter);
-    addRequirements(m_Indexer);
+    // addRequirements(m_Indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Shooter.shootShooter(Constants.MechanismConstants.shooterSpeed);
+    m_Shooter.shootShooter(Constants.MechanismConstants.shooterSpeed * m_direction);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_Shooter.isAtSpeed()) {
-      m_Indexer.moveIndexer(1);
+      // m_Indexer.moveIndexer(1);
     }
   }
 
@@ -39,7 +42,7 @@ public class shoot extends Command {
   @Override
   public void end(boolean interrupted) {
     m_Shooter.motorOff();
-    m_Indexer.motorOff();
+    // m_Indexer.motorOff();
   }
 
   // Returns true when the command should end.

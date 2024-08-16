@@ -15,10 +15,10 @@ import frc.robot.Constants;
 import frc.robot.Constants.MechanismConstants;
 
 public class Shooter extends SubsystemBase {
-  private CANSparkMax topShooterSparkMax = new CANSparkMax(MechanismConstants.kTopShooterPort, MotorType.kBrushless);
-  private CANSparkMax bottomShooterSparkMax = new CANSparkMax(MechanismConstants.kBottomShooterPort, MotorType.kBrushless);
+  private CANSparkMax rightShooterSparkMax = new CANSparkMax(MechanismConstants.kRightShooterPort, MotorType.kBrushless);
+  private CANSparkMax leftShooterSparkMax = new CANSparkMax(MechanismConstants.kLeftShooterPort, MotorType.kBrushless);
 
-  private RelativeEncoder topShooterEncoder = topShooterSparkMax.getEncoder(); 
+  private RelativeEncoder rightShooterEncoder = rightShooterSparkMax.getEncoder(); 
   private SparkPIDController m_pidController;
   // private RelativeEncoder m_encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
@@ -34,7 +34,7 @@ public class Shooter extends SubsystemBase {
     // kMinOutput = -1;
     // maxRPM = 5700;
 
-    // m_pidController = topShooterSparkMax.getPIDController();
+    // m_pidController = rightShooterSparkMax.getPIDController();
 
     // Encoder object created to display position values
     // m_encoder = m_motor.getEncoder();
@@ -47,36 +47,38 @@ public class Shooter extends SubsystemBase {
     // m_pidController.setFF(kFF);
     // m_pidController.setOutputRange(kMinOutput, kMaxOutput);
 
-    // bottomShooterSparkMax.follow(topShooterSparkMax);
+    // leftShooterSparkMax.setInverted(false);
 
-    topShooterSparkMax.setSmartCurrentLimit(40);
-    bottomShooterSparkMax.setSmartCurrentLimit(40);
+    leftShooterSparkMax.follow(rightShooterSparkMax, true);
+
+    rightShooterSparkMax.setSmartCurrentLimit(40);
+    leftShooterSparkMax.setSmartCurrentLimit(40);
   }
 
   public void shootShooter(double speed){
-    topShooterSparkMax.set(speed); 
-    bottomShooterSparkMax.set(speed / 2);
+    rightShooterSparkMax.set(speed); 
+    // leftShooterSparkMax.set(speed / 2);
     // m_pidController.setReference(speed*maxRPM, CANSparkMax.ControlType.kVelocity);
-    // bottomShooterSparkMax.set(speed);
+    // leftShooterSparkMax.set(speed);
   }
 
   public void ampShootShooter(double speed) {
-    topShooterSparkMax.set(speed);
-    bottomShooterSparkMax.set(speed / 2);
+    rightShooterSparkMax.set(speed);
+    // leftShooterSparkMax.set(speed / 2);
   }
 
   public void reverseShooter(double speed) {
-    topShooterSparkMax.set(-speed);
-    bottomShooterSparkMax.set(-speed);
+    rightShooterSparkMax.set(-speed);
+    // leftShooterSparkMax.set(-speed);
   }
 
   public void motorOff() {
-    topShooterSparkMax.stopMotor();
-    bottomShooterSparkMax.stopMotor();
+    rightShooterSparkMax.stopMotor();
+    // leftShooterSparkMax.stopMotor();
   }
 
   public boolean isAtSpeed() {
-    if (topShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.shooterSpeed) {
+    if (rightShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.shooterSpeed) {
       return true;
     }
     else {
@@ -85,7 +87,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isAtAmpSpeed() {
-    if (topShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.ampShooterSpeed) {
+    if (rightShooterEncoder.getVelocity() >= 5000 * Constants.MechanismConstants.ampShooterSpeed) {
       return true;
     }
     else {
@@ -96,6 +98,6 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Top Shooter RPM", topShooterEncoder.getVelocity());
+    SmartDashboard.putNumber("Top Shooter RPM", rightShooterEncoder.getVelocity());
   }
 }

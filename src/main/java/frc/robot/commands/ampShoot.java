@@ -24,13 +24,13 @@ public class ampShoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Shooter.shootShooter(Constants.MechanismConstants.ampShooterSpeed);
+    m_Shooter.shootShooter(Constants.MechanismConstants.shooterSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_Shooter.isAtAmpSpeed()) {
+    if (m_Shooter.isAtSpeed()) {
       // m_Indexer.moveIndexer(Constants.MechanismConstants.ampShooterSpeed);
       m_Indexer.moveIndexer(1);
     }

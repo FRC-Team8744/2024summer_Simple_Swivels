@@ -16,10 +16,10 @@ public class Indexer extends SubsystemBase {
   public Indexer() {}
 
   public void moveIndexer(double speed){
-    indexerSparkMax.set(-speed);
+    indexerSparkMax.set(speed);
   }
   public void reverseIndexer(double speed){
-    indexerSparkMax.set(speed);
+    indexerSparkMax.set(-speed);
   }
 
   public void motorOff(){

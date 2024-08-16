@@ -13,9 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ConstantsOffboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.commands.Ampshot;
+import frc.robot.commands.LoadFromTop;
 import frc.robot.commands.Outtake;
 import frc.robot.commands.RunIntakeandIndex;
 import frc.robot.commands.SourceIntake;
+import frc.robot.commands.Trings;
 import frc.robot.commands.ampShoot;
 import frc.robot.commands.runIndexer;
 import frc.robot.commands.runIntake;
@@ -24,6 +27,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDS;
+import frc.robot.subsystems.Vision2;
+import frc.robot.commands.auto_led;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -42,11 +48,13 @@ import com.pathplanner.lib.auto.AutoBuilder;
  */
 public class RobotContainer {
   // The robot's subsystems
-  public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final LEDS m_leds = new LEDS();
   public final Intake m_spinIntake = new Intake();
-  //public final Indexer m_spinIndex = new Indexer();
+  public final Indexer m_spinIndex = new Indexer();
   public final Shooter m_spinShooter = new Shooter();
+  public final Vision2 m_Vision2 = new Vision2();
+  public final Vision m_Vision = new Vision();
+  public final DriveSubsystem m_robotDrive = new DriveSubsystem(m_Vision2);
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -57,9 +65,11 @@ public class RobotContainer {
   // A chooser for autonomous commands
   private final SendableChooser<Command> m_autoChooser;
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
+  // private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
+  // private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
+  // private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
+
+  private final String controllerMode = "x";
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -78,9 +88,9 @@ public class RobotContainer {
                   // m_xspeedLimiter.calculate( -0.1 )*SwerveConstants.kMaxSpeedTeleop,
                   // m_yspeedLimiter.calculate( -0.0 )*SwerveConstants.kMaxSpeedTeleop,
                   // m_rotLimiter.calculate( -0.0 )*ConstantsOffboard.MAX_ANGULAR_RADIANS_PER_SECOND,
-                  m_xspeedLimiter.calculate( -m_driverController.getLeftY() )*SwerveConstants.kMaxSpeedTeleop,
-                  m_yspeedLimiter.calculate( -m_driverController.getLeftX() )*SwerveConstants.kMaxSpeedTeleop,
-                  m_rotLimiter.calculate( -m_driverController.getRightX() )*ConstantsOffboard.MAX_ANGULAR_RADIANS_PER_SECOND,
+                  ( -m_driverController.getLeftY() )*SwerveConstants.kMaxSpeedTeleop,
+                  ( -m_driverController.getLeftX() )*SwerveConstants.kMaxSpeedTeleop,
+                  ( -m_driverController.getRightX() )*ConstantsOffboard.MAX_ANGULAR_RADIANS_PER_SECOND,
                   true), //field orintation stuffs
           m_robotDrive));
 
@@ -97,13 +107,35 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
+
+    // new JoystickButton(m_driverController, Button.kB.value)
+    // .onTrue(new auto_led(m_Vision2, m_robotDrive));
+
+ if (controllerMode == "x") {
+//       new JoystickButton(m_driverController, Button.kB.value)
+//       .onTrue(new auto_led(m_Vision2, m_robotDrive, m_leds, m_spinShooter).withTimeout(2.0));
+ }
+      // new JoystickButton(m_driverController, Button.kA.value)
+      // .onTrue(new Trings(m_leds, m_robotDrive));
+
+      //  new JoystickButton(m_driverController, Button.kRightBumper.value);
+
+      //  new JoystickButton(m_driverController, Button.kB.value)
+      //  .whileTrue(new auto_led(m_Vision2, m_robotDrive, m_leds, m_spinShooter));
+      // .whileTrue(Commands.sequence(new auto_led(m_Vision2, m_robotDrive, m_leds, m_shooter).withTimeout(1.0), new VisionShoot(m_shooter, m_index, m_leds, m_Vision2)));
+
+
+
+
       // m_driver.leftTrigger().whileTrue(new AmpShoot(m_climber, m_shooter, m_index, m_leds));
       // new JoystickButton(m_driverController, Button.kA.value)
       // .whileTrue(new ClimbDown(m_climber));
       // new POVButton(m_driverController, 180)
       // .whileTrue(new InstantCommand(() -> m_shooter.stopShooter()));
-     // m_driver.rightTrigger().whileTrue(new ampShoot(m_spinShooter, m_spinIndex));
-      //m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
+      m_driver.rightTrigger().whileTrue(new ampShoot(m_spinShooter, m_spinIndex));
+      m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
+      m_driver.leftTrigger().whileTrue(new Ampshot(m_spinShooter, m_spinIndex));
+      m_driver.leftBumper().whileTrue(new RunIntakeandIndex(m_spinIntake, m_spinIndex));
       //m_driver.rightBumper().whileTrue(new shoot(m_spinShooter, m_spinIndex));
       //m_driver.x().whileTrue(new Outtake(m_spinIntake, m_spinIndex));
       //m_driver.y().whileTrue(new SourceIntake(m_spinIndex, m_spinShooter));
@@ -113,15 +145,19 @@ public class RobotContainer {
       .whileTrue(new RunCommand(() -> m_robotDrive.zeroIMU()));
       new JoystickButton(m_driverController, Button.kLeftStick.value)
       .toggleOnTrue(Commands.runOnce(() -> m_robotDrive.toggleMaxOutput()));
-      new JoystickButton(m_driverController, Button.kB.value)
-      .whileTrue(new runIntake(m_spinIntake));
+      // new JoystickButton(m_driverController, Button.kB.value)
+      // .whileTrue(new runIntake(m_spinIntake));
       // new JoystickButton(m_driverController, Button.kA.value)
-      // .whileTrue(new runIndexer(m_spinIndex));
-      //  new JoystickButton(m_driverController, Button.kX.value)
-      // .whileTrue(new shoot(m_spinShooter, m_spinIndex));
+      // .whileTrue(new runIndexer(m_spinIndex , 1.0));
+      // new JoystickButton(m_driverController, Button.kX.value)
+      // .whileTrue(new shoot(m_spinShooter , 1.0));
+      new JoystickButton(m_driverController, Button.kY.value)
+      .whileTrue(new LoadFromTop(m_spinShooter, m_spinIndex));
+ }
+
       // new JoystickButton(m_driverController, Button.kY.value)
       // .whileTrue(new RunIntakeandIndex(m_spinIntake,m_spinIndex));
 
-  }
+  
  public Command getAutonomousCommand() {return m_autoChooser.getSelected();}
 }

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -11,12 +13,15 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -29,6 +34,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.util.Optional;
 
 public class DriveSubsystem extends SubsystemBase {
   StructPublisher<Pose2d> pose_publisher = NetworkTableInstance.getDefault().getStructTopic("RobotPose", Pose2d.struct).publish();
@@ -52,6 +58,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // The imu sensor
   public final Multi_IMU m_imu = new Multi_IMU();
+  public final Vision2 m_Vision2;
   
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
@@ -60,9 +67,22 @@ public class DriveSubsystem extends SubsystemBase {
   public Field2d m_field;
 
   private String MyName;
+
+  public SwerveModulePosition[] getModulePositions() {
+      return new SwerveModulePosition[] {
+        m_frontLeft.getPosition(),
+        m_frontRight.getPosition(),
+        m_rearLeft.getPosition(),
+        m_rearRight.getPosition()
+      };
+  }
   
+private final SwerveDrivePoseEstimator m_poseEstimator;
+
+
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem() {
+  public DriveSubsystem(Vision2 m_Vision2) {
+    this.m_Vision2 = m_Vision2;
     MyName = Preferences.getString("RobotName", "Swivels");
     System.out.println("Robot ID: " + MyName);
     switch(MyName) {
@@ -167,6 +187,16 @@ public class DriveSubsystem extends SubsystemBase {
     PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
 
     SmartDashboard.putData(m_field);
+
+    m_poseEstimator = 
+    new SwerveDrivePoseEstimator(
+      Constants.SwerveConstants.kDriveKinematics,
+      m_imu.getHeading(),
+      getModulePositions(),
+      getPose(),
+      VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+      VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+
   }
 
   @Override
@@ -181,8 +211,14 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
         });
     
+      if (m_Vision2.getTarget().map((t)-> t.getPoseAmbiguity()).orElse(1.0) <= .2) {
+        m_Vision2.getRobotPose().ifPresent((robotPose) -> m_poseEstimator.addVisionMeasurement(robotPose, m_Vision2.getApriltagTime()));
+      }
+
+      m_poseEstimator.update(m_imu.getHeading(), getModulePositions());
+
     // Update robot position on Field2d.
-    m_field.setRobotPose(getPose());
+    m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
       
     pose_publisher.set(getPose());
     swerve_publisher.set(new SwerveModuleState[] {
@@ -247,6 +283,8 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
         },
         pose);
+
+      m_poseEstimator.resetPosition(m_imu.getHeading(), getModulePositions(), pose);
   }
 
   /**
